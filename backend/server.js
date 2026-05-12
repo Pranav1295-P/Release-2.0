@@ -74,7 +74,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Server error' })
 })
 
-const PORT = process.env.PORT || 5000
+// ✅ FIXED: Changed fallback from 5000 to 5001 to match your backend .env file
+const PORT = process.env.PORT || 5001
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/pranav-portfolio'
 
 mongoose
