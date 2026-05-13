@@ -95,7 +95,7 @@ export default function IntroOverlay({ onDone }) {
               transition={{ delay: 0.9, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-[14vw] md:text-[10vw] leading-[0.85] tracking-tightest text-white"
             >
-              RELATIVITY
+              ..
             </motion.h1>
           </div>
 
@@ -106,7 +106,7 @@ export default function IntroOverlay({ onDone }) {
               transition={{ delay: 1.15, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-[14vw] md:text-[10vw] leading-[0.85] tracking-tightest text-coral-500"
             >
-              Welcome
+              Welcome On Board
             </motion.h1>
           </div>
 
