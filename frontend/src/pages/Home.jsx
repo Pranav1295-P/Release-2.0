@@ -31,9 +31,7 @@ export default function Home() {
             >
               <span className="section-eyebrow">Pranav Murthy · Relativity OpenSource</span>
 
-              <h1 className="mt-8 font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-white">
-                A fit body, a calm mind, a house full of love
-              </h1>
+
               <h1 className="font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-coral-500">
                 Don’t take yourself so seriously
               </h1>
