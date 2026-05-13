@@ -35,10 +35,11 @@ export default function Home() {
                 A fit body, a calm mind, a house full of love
               </h1>
               <h1 className="font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-coral-500">
-                These things cannot be bought they must be earned.
+                Don’t take yourself so seriously
               </h1>
               <h1 className="mt-8 font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-white">
-                ~Naval Ravikanth
+                You’re just a monkey with a plan.” - Naval
+
               </h1>
 
               <motion.div
