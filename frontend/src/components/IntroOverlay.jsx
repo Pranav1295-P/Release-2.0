@@ -1,104 +1,123 @@
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function IntroOverlay({ onDone }) {
-  useEffect(() => {
-    const t = setTimeout(onDone, 4200)
-    return () => clearTimeout(t)
-  }, [onDone])
+  const [phase, setPhase] = useState(0)
 
-  const text = 'Welcome To Pranav Murthy Official Page'
-  const words = text.split(' ')
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase(1), 1400)
+    const t2 = setTimeout(() => setPhase(2), 2800)
+    const t3 = setTimeout(onDone, 4400)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [onDone])
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950"
+      exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeInOut' } }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950 overflow-hidden"
     >
-      {/* Animated background rays */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute -inset-[20%]"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, ease: 'linear', repeat: Infinity }}
-          style={{
-            background:
-              'conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(245,214,138,0.08) 30deg, transparent 60deg, rgba(167,139,250,0.06) 90deg, transparent 120deg, rgba(245,214,138,0.04) 180deg, transparent 360deg)',
-          }}
-        />
-      </div>
-
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,6,10,0.9)_70%,#05060a_100%)]" />
-
-      {/* Central monogram */}
+      {/* Soft glow */}
       <motion.div
-        initial={{ scale: 0, rotate: -90, opacity: 0 }}
-        animate={{ scale: 1, rotate: 0, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[200%]"
+        animate={{ opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 6, repeat: Infinity }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full blur-[120px]"
+        style={{ background: 'radial-gradient(circle, rgba(212,245,107,0.18), transparent 70%)' }}
+      />
+
+      {/* Grid background */}
+      <div className="absolute inset-0 grid-bg opacity-50" />
+      <div className="absolute inset-0 noise" />
+
+      {/* Top label */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="absolute top-10 left-1/2 -translate-x-1/2 flex items-center gap-3"
       >
-        <div className="relative">
-          <motion.div
-            className="absolute inset-0 rounded-full blur-2xl"
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ background: 'radial-gradient(circle, #f5d68a, transparent 70%)' }}
-          />
-          <div className="relative w-20 h-20 rounded-full border border-gold-500/40 flex items-center justify-center font-display text-4xl text-gradient-gold">
-            P
-          </div>
-        </div>
+        <span className="w-8 h-px bg-lime-400" />
+        <span className="font-sans text-[0.65rem] tracking-[0.45em] uppercase text-lime-400">
+          Relativity OpenSource
+        </span>
+        <span className="w-8 h-px bg-lime-400" />
       </motion.div>
 
-      <div className="relative z-10 text-center px-6">
+      {/* Center stage — multiple phases */}
+      <div className="relative z-10 px-6 text-center">
+        {/* Phase 0 — "Welcome" appears */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="font-mono text-[0.65rem] tracking-[0.5em] text-gold-500/70 uppercase mb-6"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{
+            opacity: phase < 2 ? 1 : 0,
+            scale: phase < 2 ? 1 : 1.1,
+            y: phase < 2 ? 0 : -20,
+          }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          — Relativity OpenSource —
+          <div className="font-mono text-[0.7rem] tracking-[0.4em] uppercase text-cream-200/40 mb-4">
+            — An aesthetic introduction —
+          </div>
+          <h1 className="font-display text-7xl md:text-9xl leading-[0.9] text-cream-50">
+            Welcome
+          </h1>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: phase >= 1 ? 1 : 0 }}
+            transition={{ duration: 0.6 }}
+            className="mt-6 mx-auto h-px w-32 bg-lime-400 origin-center"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase >= 1 ? 1 : 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 font-sans text-sm text-cream-200/60 tracking-[0.2em] uppercase"
+          >
+            to the official page of
+          </motion.div>
         </motion.div>
 
-        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl leading-tight">
-          {words.map((word, i) => (
-            <motion.span
-              key={i}
-              initial={{ y: 60, opacity: 0, filter: 'blur(20px)' }}
-              animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-              transition={{
-                delay: 0.8 + i * 0.12,
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="inline-block mr-3"
-            >
-              {word === 'Pranav' || word === 'Murthy' ? (
-                <span className="text-gradient-gold italic">{word}</span>
-              ) : (
-                <span className="text-white/95">{word}</span>
-              )}
-            </motion.span>
-          ))}
-        </h1>
-
+        {/* Phase 2 — Name reveals */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 2.2, duration: 1.2, ease: 'easeInOut' }}
-          className="mt-8 mx-auto h-px w-64 bg-gradient-to-r from-transparent via-gold-500 to-transparent origin-left"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.8, duration: 0.8 }}
-          className="mt-6 text-xs tracking-[0.4em] uppercase text-white/40"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{
+            opacity: phase >= 2 ? 1 : 0,
+            scale: phase >= 2 ? 1 : 0.95,
+          }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className={phase >= 2 ? '' : 'absolute inset-0 pointer-events-none'}
         >
-          An Official Web Experience
-        </motion.p>
+          <div className="font-mono text-[0.7rem] tracking-[0.4em] uppercase text-lime-400 mb-6">
+            ✦ Est. 2026 ✦
+          </div>
+          <h2 className="font-display italic text-7xl md:text-[10rem] leading-[0.9] text-cream-50">
+            Pranav <span className="text-lime-400">Murthy</span>
+          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : 10 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mt-8 font-sans text-xs tracking-[0.5em] uppercase text-cream-200/50"
+          >
+            Curiosity · Code · Quiet rebellion
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Bottom — running marquee strip */}
+      <div className="absolute bottom-0 left-0 right-0 border-y border-cream-200/10 overflow-hidden py-3 bg-ink-950/40">
+        <div className="marquee font-sans text-xs tracking-[0.4em] uppercase text-cream-200/30">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="flex gap-12 px-6 whitespace-nowrap">
+              <span>AI</span> <span>·</span>
+              <span>Cyber Security</span> <span>·</span>
+              <span>B.Tech CSE</span> <span>·</span>
+              <span>Relativity OpenSource</span> <span>·</span>
+              <span>Free-Conversations</span> <span>·</span>
+              <span>Under Construction</span> <span>·</span>
+            </div>
+          ))}
+        </div>
       </div>
     </motion.div>
   )

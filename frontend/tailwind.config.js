@@ -5,31 +5,49 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#05060a',
-          900: '#0a0c14',
-          800: '#0f1220',
-          700: '#161a2c',
+          950: '#0a0a0a',
+          900: '#0e0e10',
+          800: '#15151a',
+          700: '#1c1c22',
         },
+        cream: {
+          50: '#fafaf7',
+          100: '#f5f3ec',
+          200: '#ede9dc',
+          300: '#d9d4c2',
+        },
+        lime: {
+          400: '#d4f56b',
+          500: '#bce650',
+          600: '#a3cf3d',
+        },
+        peach: {
+          400: '#fbbf9c',
+          500: '#f8a978',
+        },
+        // backward-compat keys still referenced by older files
         gold: {
-          400: '#f5d68a',
-          500: '#e7c069',
-          600: '#c9a04d',
+          400: '#d4f56b',
+          500: '#bce650',
+          600: '#a3cf3d',
         },
         accent: {
-          cyan: '#7df9ff',
-          violet: '#a78bfa',
+          cyan: '#7ee8c5',
+          violet: '#f8a978',
         },
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Instrument Serif"', 'serif'],
+        sans: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
         'float-slow': 'float 8s ease-in-out infinite',
-        shimmer: 'shimmer 3s linear infinite',
+        shimmer: 'shimmer 4s linear infinite',
         'fade-in': 'fadeIn 1s ease-out forwards',
         'gradient': 'gradient 8s ease infinite',
+        'marquee': 'marquee 30s linear infinite',
       },
       keyframes: {
         float: {
@@ -47,6 +65,10 @@ export default {
         gradient: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
     },
