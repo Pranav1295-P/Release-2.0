@@ -5,49 +5,63 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#0a0a0a',
-          900: '#0e0e10',
-          800: '#15151a',
-          700: '#1c1c22',
+          950: '#000000',
+          900: '#070708',
+          800: '#0e0e10',
+          700: '#16161a',
         },
+        coral: {
+          400: '#ff7a4d',
+          500: '#ff5722',
+          600: '#e64a1a',
+          700: '#c93f15',
+        },
+        mute: {
+          100: '#fafafa',
+          300: '#a3a3a3',
+          500: '#737373',
+          700: '#404040',
+        },
+        // backward-compat (older files still use these tokens)
         cream: {
-          50: '#fafaf7',
-          100: '#f5f3ec',
-          200: '#ede9dc',
-          300: '#d9d4c2',
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#a3a3a3',
         },
         lime: {
-          400: '#d4f56b',
-          500: '#bce650',
-          600: '#a3cf3d',
+          400: '#ff5722',
+          500: '#ff5722',
+          600: '#e64a1a',
+        },
+        gold: {
+          400: '#ff5722',
+          500: '#ff5722',
+          600: '#e64a1a',
         },
         peach: {
-          400: '#fbbf9c',
-          500: '#f8a978',
-        },
-        // backward-compat keys still referenced by older files
-        gold: {
-          400: '#d4f56b',
-          500: '#bce650',
-          600: '#a3cf3d',
+          400: '#ff7a4d',
+          500: '#ff5722',
         },
         accent: {
-          cyan: '#7ee8c5',
-          violet: '#f8a978',
+          cyan: '#ff7a4d',
+          violet: '#ff5722',
         },
       },
       fontFamily: {
-        display: ['"Instrument Serif"', 'serif'],
-        sans: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      letterSpacing: {
+        tightest: '-0.04em',
+        tighter: '-0.025em',
       },
       animation: {
         'float-slow': 'float 8s ease-in-out infinite',
         shimmer: 'shimmer 4s linear infinite',
         'fade-in': 'fadeIn 1s ease-out forwards',
-        'gradient': 'gradient 8s ease infinite',
-        'marquee': 'marquee 30s linear infinite',
       },
       keyframes: {
         float: {
@@ -61,14 +75,6 @@ export default {
         fadeIn: {
           '0%': { opacity: 0, transform: 'translateY(20px)' },
           '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
         },
       },
     },

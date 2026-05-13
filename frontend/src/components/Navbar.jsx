@@ -27,37 +27,29 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 4.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: 3.6, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'backdrop-blur-2xl bg-ink-950/70 border-b border-cream-200/10'
+          ? 'backdrop-blur-xl bg-black/80 border-b border-white/10'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-sm border border-lime-400/40 bg-ink-900 flex items-center justify-center font-display italic text-2xl text-lime-400 leading-none">
-              P
-            </div>
-          </div>
-          <div className="hidden sm:block">
-            <div className="font-display italic text-lg leading-none text-cream-50">Pranav Murthy</div>
-            <div className="font-mono text-[0.55rem] tracking-[0.3em] uppercase text-lime-400/80 mt-1">
-              Relativity OpenSource
-            </div>
+          <div className="font-display font-bold text-xl text-white tracking-tighter leading-none">
+            PRANAV<span className="text-coral-500">.</span>
           </div>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               end={l.to === '/'}
               className={({ isActive }) =>
-                `relative px-5 py-2 text-sm font-sans tracking-wide transition-colors ${
-                  isActive ? 'text-lime-400' : 'text-cream-100/70 hover:text-cream-50'
+                `relative font-sans text-xs font-medium tracking-[0.15em] uppercase transition-colors ${
+                  isActive ? 'text-coral-500' : 'text-white/65 hover:text-white'
                 }`
               }
             >
@@ -67,7 +59,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.div
                       layoutId="nav-underline"
-                      className="absolute left-1/2 -translate-x-1/2 -bottom-1 h-px w-8 bg-lime-400"
+                      className="absolute left-0 right-0 -bottom-1.5 h-px bg-coral-500"
                     />
                   )}
                 </>
@@ -79,28 +71,28 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-cream-200/10 bg-cream-50/[0.02]">
-                <User size={14} className="text-lime-400" />
-                <span className="font-sans text-xs text-cream-100/80">{user.username}</span>
+              <div className="flex items-center gap-2 px-3 py-1.5 border border-white/15">
+                <User size={12} className="text-coral-500" />
+                <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-white/80">{user.username}</span>
               </div>
               {user.isAdmin && (
-                <Link to="/admin/blog" className="btn-ghost !py-1.5 !px-3 text-xs">
+                <Link to="/admin/blog" className="btn-premium !py-1.5 !px-3 !text-[0.65rem]">
                   Write
                 </Link>
               )}
-              <button onClick={() => { logout(); navigate('/') }} className="text-cream-100/60 hover:text-lime-400 transition-colors">
+              <button onClick={() => { logout(); navigate('/') }} className="text-white/50 hover:text-coral-500 transition-colors">
                 <LogOut size={16} />
               </button>
             </div>
           ) : (
-            <Link to="/auth" className="btn-ghost !py-1.5 !px-4 text-xs">
-              <LogIn size={14} />
+            <Link to="/auth" className="btn-premium !py-1.5 !px-4 !text-[0.65rem]">
+              <LogIn size={12} />
               <span>Sign in</span>
             </Link>
           )}
         </div>
 
-        <button onClick={() => setOpen(true)} className="lg:hidden text-cream-50">
+        <button onClick={() => setOpen(true)} className="lg:hidden text-white">
           <Menu size={24} />
         </button>
       </div>
@@ -113,17 +105,17 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
-            className="fixed inset-0 z-50 bg-ink-950/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl lg:hidden"
           >
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.5 }}
+              transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 top-0 h-full w-72 bg-ink-900 border-l border-cream-200/10 p-8"
+              className="absolute right-0 top-0 h-full w-72 bg-black border-l border-white/10 p-8"
             >
-              <button onClick={() => setOpen(false)} className="absolute top-6 right-6 text-cream-100/60">
+              <button onClick={() => setOpen(false)} className="absolute top-6 right-6 text-white/60">
                 <X size={22} />
               </button>
               <div className="mt-12 flex flex-col gap-5">
@@ -134,23 +126,23 @@ export default function Navbar() {
                     end={l.to === '/'}
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
-                      `font-display text-2xl ${isActive ? 'italic text-lime-400' : 'text-cream-50'}`
+                      `font-display font-bold text-3xl tracking-tighter ${isActive ? 'text-coral-500' : 'text-white'}`
                     }
                   >
                     {l.label}
                   </NavLink>
                 ))}
-                <div className="h-px bg-cream-200/10 my-2" />
+                <div className="h-px bg-white/10 my-2" />
                 {user ? (
                   <>
-                    <div className="font-mono text-xs text-lime-400">@{user.username}</div>
-                    {user.isAdmin && <Link to="/admin/blog" onClick={() => setOpen(false)} className="text-cream-50">Write Post</Link>}
-                    <button onClick={() => { logout(); setOpen(false); navigate('/') }} className="text-left text-cream-50">
+                    <div className="font-mono text-xs text-coral-500 uppercase tracking-widest">@{user.username}</div>
+                    {user.isAdmin && <Link to="/admin/blog" onClick={() => setOpen(false)} className="text-white">Write Post</Link>}
+                    <button onClick={() => { logout(); setOpen(false); navigate('/') }} className="text-left text-white">
                       Sign out
                     </button>
                   </>
                 ) : (
-                  <Link to="/auth" onClick={() => setOpen(false)} className="text-lime-400">
+                  <Link to="/auth" onClick={() => setOpen(false)} className="text-coral-500 font-semibold">
                     Sign in / Register
                   </Link>
                 )}
