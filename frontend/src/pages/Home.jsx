@@ -32,11 +32,12 @@ export default function Home() {
               <span className="section-eyebrow">Pranav Murthy · Relativity OpenSource</span>
 
 
-              <h1 className="font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-coral-500">
-                Don’t take yourself so seriously
+              <h1 className="font-display text-5xl md:text-7xl leading-[0.88] tracking-tightest text-coral-500">
+                Pranav Murthy
               </h1>
+
               <h1 className="mt-8 font-display text-[14vw] md:text-[8.5vw] leading-[0.88] tracking-tightest text-white">
-                You’re just a monkey with a plan.” - Naval
+                Official Webpage
 
               </h1>
 
