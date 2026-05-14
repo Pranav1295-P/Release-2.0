@@ -51,8 +51,7 @@ export default function Home() {
               <p className="mt-8 max-w-xl font-body text-base md:text-lg text-white/65 leading-relaxed">
                 Free-Conversation Section Is Under Development Please{' '}
                 <span className="text-white font-semibold">Cooperate</span> and{' '}
-                <span className="text-white font-semibold">Sorry For Inconvenience</span>, one
-                quiet commit at a time.
+                <span className="text-white font-semibold">Sorry For Inconvenience</span>
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-3">
