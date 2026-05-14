@@ -72,9 +72,10 @@ export default function BlogComposer({ onPosted }) {
       form.append('title', title)
       form.append('body', body)
       files.forEach((f) => form.append('media', f.file))
-      await api.post('/blogs', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      // NOTE: don't set Content-Type manually — axios adds it WITH the
+      // multipart boundary automatically when the body is a FormData.
+      // Setting it by hand drops the boundary and the server can't parse fields.
+      await api.post('/blogs', form)
       // reset
       setTitle('')
       setBody('')

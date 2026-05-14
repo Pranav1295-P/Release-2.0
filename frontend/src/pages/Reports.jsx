@@ -53,9 +53,8 @@ export default function Reports() {
     setSubmitting(true)
     setError('')
     try {
-      await api.post('/reports', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      // Let axios set the multipart Content-Type (with boundary) automatically.
+      await api.post('/reports', formData)
       setShowUpload(false)
       setTitle('')
       setFile(null)
