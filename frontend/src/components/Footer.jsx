@@ -20,7 +20,7 @@ export default function Footer() {
         >
           <div>
             <div className="font-display font-bold text-3xl text-white tracking-tighter leading-none">
-              PRANAV<span className="text-coral-500">.</span>
+              PRANAV<span className="text-coral-500">.COM</span>
             </div>
             <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] uppercase text-coral-500/80">
               Relativity OpenSource

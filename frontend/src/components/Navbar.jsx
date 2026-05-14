@@ -37,7 +37,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
           <div className="font-display font-bold text-xl text-white tracking-tighter leading-none">
-            PRANAV<span className="text-coral-500">.</span>
+            PRANAV<span className="text-coral-500">.COM</span>
           </div>
         </Link>
 
@@ -71,15 +71,10 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 border border-white/15">
+              <Link to="/blogs" className="flex items-center gap-2 px-3 py-1.5 border border-white/15 hover:border-coral-500 transition-colors">
                 <User size={12} className="text-coral-500" />
                 <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-white/80">{user.username}</span>
-              </div>
-              {user.isAdmin && (
-                <Link to="/admin/blog" className="btn-premium !py-1.5 !px-3 !text-[0.65rem]">
-                  Write
-                </Link>
-              )}
+              </Link>
               <button onClick={() => { logout(); navigate('/') }} className="text-white/50 hover:text-coral-500 transition-colors">
                 <LogOut size={16} />
               </button>
@@ -136,7 +131,6 @@ export default function Navbar() {
                 {user ? (
                   <>
                     <div className="font-mono text-xs text-coral-500 uppercase tracking-widest">@{user.username}</div>
-                    {user.isAdmin && <Link to="/admin/blog" onClick={() => setOpen(false)} className="text-white">Write Post</Link>}
                     <button onClick={() => { logout(); setOpen(false); navigate('/') }} className="text-left text-white">
                       Sign out
                     </button>
