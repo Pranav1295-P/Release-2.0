@@ -70,6 +70,14 @@ export function AuthProvider({ children }) {
     return data
   }
 
+  /* ── Refresh the signed-in user from the server (e.g. after a payment) ── */
+  const refreshUser = async () => {
+    const { data } = await api.get('/auth/me')
+    localStorage.setItem('user', JSON.stringify(data.user))
+    setUser(data.user)
+    return data.user
+  }
+
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -88,6 +96,7 @@ export function AuthProvider({ children }) {
         requestPasswordReset,
         resetPassword,
         recoverUsername,
+        refreshUser,
         logout,
       }}
     >

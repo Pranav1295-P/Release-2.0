@@ -74,6 +74,10 @@ gh repo create pranav-portfolio --private --source=. --push
    | `CLOUDINARY_CLOUD_NAME` | from Step 2c below (image/video uploads)                     |
    | `CLOUDINARY_API_KEY`    | from Step 2c below                                           |
    | `CLOUDINARY_API_SECRET` | from Step 2c below                                           |
+   | `GOLD_VERIFIED_EMAILS`  | comma-separated emails that get the gold tick (e.g. `murthypranav662@gmail.com`) |
+   | `RAZORPAY_KEY_ID`       | from Step 2d below (blue-tick payments)                      |
+   | `RAZORPAY_KEY_SECRET`   | from Step 2d below                                           |
+   | `RAZORPAY_WEBHOOK_SECRET` | from Step 2d below (optional)                              |
 
 5. Click **Create Web Service**. Wait for the first deploy (~3 min).
 6. When you see `✓ API listening` in the logs, copy the URL — that's your backend.
@@ -113,6 +117,31 @@ Blog posts on Free-Conversations can attach images and videos. These are hosted 
 4. Save → Render redeploys.
 
 > Unlike Render's ephemeral disk, Cloudinary-hosted media survives every redeploy — this is why blog uploads use it instead of local disk.
+
+---
+
+## Step 2d — Razorpay (₹99/month blue-tick payments)
+
+The blue verified tick is a ₹99/month subscription paid via Razorpay.
+
+1. Go to **https://dashboard.razorpay.com** and sign up.
+2. **Stay in Test Mode** for now — there's a toggle at the top of the dashboard. Test Mode needs no business KYC and accepts fake test cards. Switch to Live Mode later once your account is fully verified.
+3. **Settings → API Keys → Generate Test Key**. You get:
+   - **Key Id** — starts with `rzp_test_...`
+   - **Key Secret** — shown once, copy it
+4. In Render → **Environment**, set:
+   - `RAZORPAY_KEY_ID` = the `rzp_test_...` key id
+   - `RAZORPAY_KEY_SECRET` = the key secret
+5. **(Optional but recommended) Webhook** — so payments still register even if the user closes the tab before the browser confirms:
+   - Razorpay Dashboard → **Settings → Webhooks → Add New Webhook**
+   - URL: `https://release-2-0.onrender.com/api/payments/webhook`
+   - Active events: tick **`payment.captured`**
+   - Set a **secret** → copy it → set `RAZORPAY_WEBHOOK_SECRET` in Render
+6. Save → Render redeploys.
+
+**Testing payments:** with Test Mode keys, on the Razorpay Checkout popup use card `4111 1111 1111 1111`, any future expiry, any CVV, any name. No real money moves. The blue tick will activate for 30 days.
+
+> The gold tick (admin + `GOLD_VERIFIED_EMAILS`) is granted automatically at registration — no payment involved. Only the blue tick uses Razorpay.
 
 ---
 
@@ -162,6 +191,7 @@ Click **Save Changes** — Render will redeploy automatically.
 - **Login:** username + password.
 - **Forgot password:** on the sign-in screen, "Forgot username or password?" → enter email → OTP code → set a new password.
 - **Posting:** any signed-in user can post on Free-Conversations — text plus up to 4 images/videos — and delete their own posts. There's no separate "Write" page; the composer is inline at the top of the feed.
+- **Verification:** the admin account and any email in `GOLD_VERIFIED_EMAILS` get a **gold tick** automatically on registration. Everyone else can buy a **blue tick** for ₹99/month from the `/verify` page (Razorpay). Both ticks show next to usernames on posts, comments, and the navbar.
 
 ---
 

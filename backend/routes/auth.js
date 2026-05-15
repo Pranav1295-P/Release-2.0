@@ -2,10 +2,18 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { issueOtp, verifyOtp } from '../utils/otp.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const router = express.Router()
 
 const ADMIN_USERNAME = (process.env.ADMIN_USERNAME || 'pranav').toLowerCase()
+
+// Emails that automatically receive the GOLD verified tick on registration.
+// Comma-separated in the env var. The admin account is always gold too.
+const GOLD_VERIFIED_EMAILS = (process.env.GOLD_VERIFIED_EMAILS || '')
+  .split(',')
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean)
 
 function signToken(user) {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' })
@@ -75,6 +83,12 @@ router.post('/register/verify', async (req, res, next) => {
     const user = new User({ username, email })
     await user.setPassword(password)
     if (username === ADMIN_USERNAME) user.isAdmin = true
+
+    // Grant the gold tick to the admin and any email on the allow-list.
+    if (username === ADMIN_USERNAME || GOLD_VERIFIED_EMAILS.includes(email)) {
+      user.verifiedType = 'gold'
+    }
+
     await user.save()
 
     const token = signToken(user)
@@ -110,6 +124,15 @@ router.post('/login', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+})
+
+/* ───────────────────────── CURRENT USER ──────────────────────────────
+ * GET /api/auth/me
+ * Returns the signed-in user's fresh public profile. The frontend calls
+ * this after a payment so the verified badge updates without re-login.
+ */
+router.get('/me', requireAuth, async (req, res) => {
+  res.json({ user: req.user.toPublic() })
 })
 
 /* ─────────────────── FORGOT PASSWORD (step 1) ────────────────────────

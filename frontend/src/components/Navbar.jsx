@@ -3,6 +3,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, LogIn, LogOut, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
+import VerifiedBadge from './VerifiedBadge.jsx'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -71,9 +72,18 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-3">
-              <Link to="/blogs" className="flex items-center gap-2 px-3 py-1.5 border border-white/15 hover:border-coral-500 transition-colors">
+              {!user.verifiedType && (
+                <Link
+                  to="/verify"
+                  className="font-mono text-[0.6rem] tracking-[0.15em] uppercase text-coral-400 hover:text-coral-300 transition-colors"
+                >
+                  Get Verified
+                </Link>
+              )}
+              <Link to="/blogs" className="flex items-center gap-1.5 px-3 py-1.5 border border-white/15 hover:border-coral-500 transition-colors">
                 <User size={12} className="text-coral-500" />
                 <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-white/80">{user.username}</span>
+                <VerifiedBadge user={user} size={13} />
               </Link>
               <button onClick={() => { logout(); navigate('/') }} className="text-white/50 hover:text-coral-500 transition-colors">
                 <LogOut size={16} />
@@ -130,7 +140,15 @@ export default function Navbar() {
                 <div className="h-px bg-white/10 my-2" />
                 {user ? (
                   <>
-                    <div className="font-mono text-xs text-coral-500 uppercase tracking-widest">@{user.username}</div>
+                    <div className="font-mono text-xs text-coral-500 uppercase tracking-widest flex items-center gap-1.5">
+                      @{user.username}
+                      <VerifiedBadge user={user} size={13} />
+                    </div>
+                    {!user.verifiedType && (
+                      <Link to="/verify" onClick={() => setOpen(false)} className="text-coral-400">
+                        Get Verified — ₹99/mo
+                      </Link>
+                    )}
                     <button onClick={() => { logout(); setOpen(false); navigate('/') }} className="text-left text-white">
                       Sign out
                     </button>

@@ -11,6 +11,7 @@ import BlogDetail from './pages/BlogDetail.jsx'
 import Reports from './pages/Reports.jsx'
 import Auth from './pages/Auth.jsx'
 import AdminBlog from './pages/AdminBlog.jsx'
+import Verify from './pages/Verify.jsx'
 
 export default function App() {
   const location = useLocation()
@@ -46,6 +47,7 @@ export default function App() {
             <Route path="/blogs/:id" element={<BlogDetail />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/verify" element={<Verify />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
           </Routes>
         </AnimatePresence>

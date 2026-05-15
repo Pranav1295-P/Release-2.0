@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, MessageCircle, Send, Trash2, Calendar } from 'lucide-react'
 import PageTransition from '../components/PageTransition.jsx'
+import VerifiedBadge from '../components/VerifiedBadge.jsx'
 import { api } from '../lib/api'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -112,8 +113,9 @@ export default function BlogDetail() {
                 {post.author?.username?.[0]?.toUpperCase() || '?'}
               </div>
               <div>
-                <div className="text-sm text-white font-medium leading-none">
+                <div className="text-sm text-white font-medium leading-none flex items-center gap-1">
                   @{post.author?.username || 'unknown'}
+                  <VerifiedBadge user={post.author} size={14} />
                 </div>
                 <div className="font-mono text-[0.6rem] tracking-wider uppercase text-white/35 mt-1 flex items-center gap-1">
                   <Calendar size={10} />
@@ -240,8 +242,9 @@ export default function BlogDetail() {
                     <div className="w-6 h-6 bg-coral-500/20 border border-coral-500/40 flex items-center justify-center text-[0.65rem] text-coral-500 font-bold">
                       {c.author?.username?.[0]?.toUpperCase() || '?'}
                     </div>
-                    <span className="text-sm text-white/85">
+                    <span className="text-sm text-white/85 flex items-center gap-1">
                       @{c.author?.username || 'anonymous'}
+                      <VerifiedBadge user={c.author} size={13} />
                     </span>
                   </div>
                   <span className="font-mono text-[0.6rem] uppercase tracking-wider text-white/35">

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, Trash2, ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition.jsx'
 import BlogComposer from '../components/BlogComposer.jsx'
+import VerifiedBadge from '../components/VerifiedBadge.jsx'
 import { api } from '../lib/api'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -118,8 +119,9 @@ export default function Blogs() {
                           {post.author?.username?.[0]?.toUpperCase() || '?'}
                         </div>
                         <div>
-                          <div className="text-sm text-white font-medium leading-none">
+                          <div className="text-sm text-white font-medium leading-none flex items-center gap-1">
                             @{post.author?.username || 'unknown'}
+                            <VerifiedBadge user={post.author} size={14} />
                           </div>
                           <div className="font-mono text-[0.6rem] tracking-wider uppercase text-white/35 mt-1">
                             {new Date(post.createdAt).toLocaleDateString('en-US', {

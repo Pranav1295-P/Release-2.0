@@ -10,7 +10,7 @@ router.get('/:id/comments', async (req, res, next) => {
   try {
     const comments = await Comment.find({ blog: req.params.id })
       .sort({ createdAt: -1 })
-      .populate('author', 'username')
+      .populate('author', 'username verifiedType verifiedUntil')
       .lean()
     res.json(comments)
   } catch (err) {
@@ -38,7 +38,7 @@ router.post('/:id/comments', requireAuth, async (req, res, next) => {
     blog.commentCount = (blog.commentCount || 0) + 1
     await blog.save()
 
-    await comment.populate('author', 'username')
+    await comment.populate('author', 'username verifiedType verifiedUntil')
     res.status(201).json(comment)
   } catch (err) {
     if (err?.name === 'CastError') return res.status(404).json({ message: 'Post not found' })

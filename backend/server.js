@@ -12,6 +12,7 @@ import authRoutes from './routes/auth.js'
 import blogRoutes from './routes/blogs.js'
 import commentRoutes from './routes/comments.js'
 import reportRoutes from './routes/reports.js'
+import paymentRoutes from './routes/payments.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -39,6 +40,10 @@ app.use(
   })
 )
 
+// Razorpay webhook needs the RAW request body to verify its signature,
+// so this raw parser must be mounted BEFORE express.json().
+app.use('/api/payments/webhook', express.raw({ type: '*/*' }))
+
 app.use(express.json({ limit: '1mb' }))
 app.use(morgan('tiny'))
 
@@ -49,8 +54,10 @@ const writeLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 })
-app.use(['/api/auth', '/api/blogs', '/api/reports'], (req, res, next) => {
+app.use(['/api/auth', '/api/blogs', '/api/reports', '/api/payments'], (req, res, next) => {
   if (req.method === 'GET') return next()
+  // The webhook is Razorpay calling us — don't rate-limit it.
+  if (req.path === '/webhook') return next()
   return writeLimiter(req, res, next)
 })
 
@@ -62,6 +69,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/blogs', commentRoutes) // nested under /api/blogs/:id/comments
 app.use('/api/reports', reportRoutes)
+app.use('/api/payments', paymentRoutes)
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }))
 

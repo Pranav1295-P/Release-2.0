@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
   try {
     const posts = await Blog.find()
       .sort({ createdAt: -1 })
-      .populate('author', 'username')
+      .populate('author', 'username verifiedType verifiedUntil')
       .lean()
     res.json(posts)
   } catch (err) {
@@ -41,7 +41,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const post = await Blog.findById(req.params.id)
-      .populate('author', 'username')
+      .populate('author', 'username verifiedType verifiedUntil')
       .lean()
     if (!post) return res.status(404).json({ message: 'Post not found' })
     res.json(post)
@@ -88,7 +88,7 @@ router.post('/', requireAuth, (req, res, next) => {
         author: req.user._id,
       })
 
-      await post.populate('author', 'username')
+      await post.populate('author', 'username verifiedType verifiedUntil')
       res.status(201).json(post)
     } catch (e) {
       next(e)

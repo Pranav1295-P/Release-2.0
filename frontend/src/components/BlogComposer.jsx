@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ImagePlus, Film, X, Send } from 'lucide-react'
 import { api } from '../lib/api'
 import { useAuth } from '../context/AuthContext.jsx'
+import VerifiedBadge from './VerifiedBadge.jsx'
 
 const MAX_FILES = 4
 const MAX_SIZE = 50 * 1024 * 1024 // 50 MB
@@ -113,8 +114,9 @@ export default function BlogComposer({ onPosted }) {
         >
           {user.username?.[0]?.toUpperCase() || '?'}
         </div>
-        <span className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-white/55">
+        <span className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-white/55 flex items-center gap-1">
           Posting as @{user.username}
+          <VerifiedBadge user={user} size={13} />
         </span>
       </div>
 
