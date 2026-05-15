@@ -13,6 +13,14 @@ const userSchema = new mongoose.Schema(
       maxlength: 32,
       match: /^[a-z0-9_]+$/,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    },
     passwordHash: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
   },
@@ -28,7 +36,13 @@ userSchema.methods.verifyPassword = function (password) {
 }
 
 userSchema.methods.toPublic = function () {
-  return { _id: this._id, username: this.username, isAdmin: this.isAdmin, createdAt: this.createdAt }
+  return {
+    _id: this._id,
+    username: this.username,
+    email: this.email,
+    isAdmin: this.isAdmin,
+    createdAt: this.createdAt,
+  }
 }
 
 export default mongoose.model('User', userSchema)

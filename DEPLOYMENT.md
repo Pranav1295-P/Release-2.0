@@ -61,19 +61,58 @@ gh repo create pranav-portfolio --private --source=. --push
    - **Instance Type:** **Free**
 4. Under **Environment → Add Environment Variable**, add:
 
-   | Key              | Value                                                        |
-   |------------------|--------------------------------------------------------------|
-   | `MONGO_URI`      | the Atlas string from Step 1                                 |
-   | `JWT_SECRET`     | a long random string (e.g. `openssl rand -hex 48`)           |
-   | `ADMIN_USERNAME` | `pranav` (the username you'll register with)                 |
-   | `CORS_ORIGIN`    | `https://your-frontend.vercel.app` (set after Step 3)        |
-   | `PUBLIC_URL`     | the Render URL Render gives you (e.g. `https://pranav-portfolio-api.onrender.com`) |
-   | `PORT`           | `10000` (Render's default)                                   |
+   | Key                     | Value                                                        |
+   |-------------------------|--------------------------------------------------------------|
+   | `MONGO_URI`             | the Atlas string from Step 1                                 |
+   | `JWT_SECRET`            | a long random string (e.g. `openssl rand -hex 48`)           |
+   | `ADMIN_USERNAME`        | `pranav` (the username you'll register with)                 |
+   | `CORS_ORIGIN`           | `https://your-frontend.vercel.app` (set after Step 3)        |
+   | `PUBLIC_URL`            | the Render URL Render gives you                              |
+   | `PORT`                  | `10000` (Render's default)                                   |
+   | `RESEND_API_KEY`        | from Step 2b below (OTP emails)                              |
+   | `EMAIL_FROM`            | from Step 2b below                                           |
+   | `CLOUDINARY_CLOUD_NAME` | from Step 2c below (image/video uploads)                     |
+   | `CLOUDINARY_API_KEY`    | from Step 2c below                                           |
+   | `CLOUDINARY_API_SECRET` | from Step 2c below                                           |
 
 5. Click **Create Web Service**. Wait for the first deploy (~3 min).
 6. When you see `✓ API listening` in the logs, copy the URL — that's your backend.
 
-> **Note on PDF uploads on Render free tier:** Render's free disks are ephemeral — files survive restarts but vanish on redeploy. For a real production setup, swap the local Multer disk storage for **Cloudinary** or **AWS S3**. For your portfolio MVP, the current setup is fine.
+> The site runs without `RESEND_*` and `CLOUDINARY_*` set — but OTP codes will only print to the Render logs (not emailed), and media uploads on blog posts will be rejected. Set them up below to make those features work for real.
+
+---
+
+## Step 2b — Resend (OTP emails)
+
+OTP codes for registration and password reset are sent via Resend.
+
+1. Go to **https://resend.com** and sign up (free tier: 3,000 emails/month).
+2. **API Keys** → **Create API Key** → name it `pranav-portfolio` → copy the key (starts with `re_`).
+3. In Render → **Environment**, set:
+   - `RESEND_API_KEY` = the key you copied
+   - `EMAIL_FROM` = `Pranav Murthy <onboarding@resend.dev>`
+     - `onboarding@resend.dev` works immediately for testing.
+     - To send from your own domain (e.g. `noreply@murthy.sbs`), go to Resend → **Domains** → add and verify your domain via DNS records, then use `Pranav Murthy <noreply@murthy.sbs>`.
+4. Save → Render redeploys.
+
+---
+
+## Step 2c — Cloudinary (image/video uploads)
+
+Blog posts on Free-Conversations can attach images and videos. These are hosted on Cloudinary.
+
+1. Go to **https://cloudinary.com** and sign up (free tier: 25 GB storage + bandwidth).
+2. On the **Dashboard**, you'll see your account credentials. Copy three values:
+   - **Cloud name**
+   - **API Key**
+   - **API Secret** (click to reveal)
+3. In Render → **Environment**, set:
+   - `CLOUDINARY_CLOUD_NAME` = your cloud name
+   - `CLOUDINARY_API_KEY` = your API key
+   - `CLOUDINARY_API_SECRET` = your API secret
+4. Save → Render redeploys.
+
+> Unlike Render's ephemeral disk, Cloudinary-hosted media survives every redeploy — this is why blog uploads use it instead of local disk.
 
 ---
 
@@ -112,9 +151,17 @@ Click **Save Changes** — Render will redeploy automatically.
 ## Step 5 — First-run setup
 
 1. Open your live frontend URL.
-2. Click **Sign in** → switch to **Register** tab.
-3. Register with username **`pranav`** (must match `ADMIN_USERNAME`) and any password ≥ 6 chars.
-4. You'll see a **Write** button in the navbar — that's how you publish blog posts.
+2. Click **Sign in** → switch to the **Register** tab.
+3. Enter your email → click **Send code**. A 6-digit code arrives by email (check spam).
+4. Enter the code, choose username **`pranav`** (must match `ADMIN_USERNAME`), set a password ≥ 6 chars → **Create account**.
+5. You're in. As the admin you can delete *any* post on Free-Conversations; regular users can delete only their own.
+
+**How the auth flows work now:**
+
+- **Register:** email → OTP code → pick username + password.
+- **Login:** username + password.
+- **Forgot password:** on the sign-in screen, "Forgot username or password?" → enter email → OTP code → set a new password.
+- **Posting:** any signed-in user can post on Free-Conversations — text plus up to 4 images/videos — and delete their own posts. There's no separate "Write" page; the composer is inline at the top of the feed.
 
 ---
 

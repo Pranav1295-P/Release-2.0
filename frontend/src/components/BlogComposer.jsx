@@ -61,7 +61,9 @@ export default function BlogComposer({ onPosted }) {
 
   const submit = async (e) => {
     e.preventDefault()
-    if (!title.trim() || !body.trim()) {
+    const t = title.trim()
+    const b = body.trim()
+    if (!t || !b) {
       setError('Add a title and some text.')
       return
     }
@@ -69,8 +71,8 @@ export default function BlogComposer({ onPosted }) {
     setError('')
     try {
       const form = new FormData()
-      form.append('title', title)
-      form.append('body', body)
+      form.append('title', t)
+      form.append('body', b)
       files.forEach((f) => form.append('media', f.file))
       // NOTE: don't set Content-Type manually — axios adds it WITH the
       // multipart boundary automatically when the body is a FormData.
