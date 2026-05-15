@@ -114,7 +114,7 @@ export default function Blogs() {
                     {/* author row */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-coral-500 text-black flex items-center justify-center font-display font-bold text-sm">
+                        <div className="w-8 h-8 bg-coral-500 text-white flex items-center justify-center font-display font-bold text-sm">
                           {post.author?.username?.[0]?.toUpperCase() || '?'}
                         </div>
                         <div>

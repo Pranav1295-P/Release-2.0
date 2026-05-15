@@ -108,7 +108,7 @@ export default function BlogDetail() {
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-coral-500 text-black flex items-center justify-center font-display font-bold">
+              <div className="w-9 h-9 bg-coral-500 text-white flex items-center justify-center font-display font-bold">
                 {post.author?.username?.[0]?.toUpperCase() || '?'}
               </div>
               <div>
@@ -187,7 +187,7 @@ export default function BlogDetail() {
               className="border border-white/12 p-5 mb-6"
             >
               <div className="flex items-center gap-2 text-xs text-white/55 mb-3 font-mono uppercase tracking-wider">
-                <span className="w-6 h-6 bg-coral-500 text-black flex items-center justify-center font-display font-bold text-xs">
+                <span className="w-6 h-6 bg-coral-500 text-white flex items-center justify-center font-display font-bold text-xs">
                   {user.username?.[0]?.toUpperCase()}
                 </span>
                 @{user.username}

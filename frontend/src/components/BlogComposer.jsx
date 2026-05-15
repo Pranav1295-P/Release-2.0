@@ -96,10 +96,21 @@ export default function BlogComposer({ onPosted }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       onSubmit={submit}
-      className="border border-white/12 bg-white/[0.015] p-6"
+      className="relative border border-white/12 bg-white/[0.015] p-6"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 bg-coral-500 text-black flex items-center justify-center font-display font-bold text-sm">
+      {/* New Feature badge */}
+      <div
+        className="absolute -top-3 left-6 px-2.5 py-1 font-mono text-[0.55rem] tracking-[0.25em] uppercase text-white font-semibold"
+        style={{ background: 'linear-gradient(135deg, #4f6fff, #8b5cf6)' }}
+      >
+        ✦ New Feature
+      </div>
+
+      <div className="flex items-center gap-2 mb-4 mt-1">
+        <div
+          className="w-8 h-8 text-white flex items-center justify-center font-display font-bold text-sm"
+          style={{ background: 'linear-gradient(135deg, #4f6fff, #8b5cf6)' }}
+        >
           {user.username?.[0]?.toUpperCase() || '?'}
         </div>
         <span className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-white/55">
@@ -136,7 +147,7 @@ export default function BlogComposer({ onPosted }) {
               <button
                 type="button"
                 onClick={() => removeFile(i)}
-                className="absolute top-1.5 right-1.5 bg-black/80 text-white p-1 hover:bg-coral-500 hover:text-black transition-colors"
+                className="absolute top-1.5 right-1.5 bg-black/80 text-white p-1 hover:bg-coral-500 hover:text-white transition-colors"
               >
                 <X size={12} />
               </button>

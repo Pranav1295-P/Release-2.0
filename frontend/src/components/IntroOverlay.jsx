@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 
 export default function IntroOverlay({ onDone }) {
   useEffect(() => {
-    const t = setTimeout(onDone, 3600)
+    const t = setTimeout(onDone, 3000)
     return () => clearTimeout(t)
   }, [onDone])
 
@@ -14,137 +14,92 @@ export default function IntroOverlay({ onDone }) {
         opacity: 0,
         transition: { duration: 0.7, ease: [0.65, 0, 0.35, 1] },
       }}
-      className="fixed inset-0 z-[100] bg-black overflow-hidden"
+      className="fixed inset-0 z-[100] bg-ink-950 overflow-hidden flex items-center justify-center"
     >
-      {/* Vertical coral light strips — Radiant style */}
+      {/* Blue + violet aurora glows */}
       <motion.div
-        initial={{ scaleY: 0, opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 0.5 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-0 bottom-0 left-[20%] w-px origin-top"
-        style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.5, scale: 1 }}
+        transition={{ duration: 1.6, ease: 'easeOut' }}
+        className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] rounded-full blur-[150px]"
+        style={{ background: 'radial-gradient(circle, rgba(79,111,255,0.45), transparent 70%)' }}
       />
       <motion.div
-        initial={{ scaleY: 0, opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 0.5 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="absolute top-0 bottom-0 right-[20%] w-px origin-top"
-        style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }}
-      />
-      <motion.div
-        initial={{ scaleY: 0, opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 0.3 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-        className="absolute top-0 bottom-0 left-[50%] w-px origin-top"
-        style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.45, scale: 1 }}
+        transition={{ duration: 1.6, ease: 'easeOut', delay: 0.2 }}
+        className="absolute bottom-1/3 right-1/3 translate-x-1/2 translate-y-1/2 w-[45vw] h-[45vw] rounded-full blur-[150px]"
+        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.4), transparent 70%)' }}
       />
 
-      {/* Soft coral glow */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.18 }}
-        transition={{ duration: 1.5 }}
-        className="absolute top-1/2 right-0 -translate-y-1/2 w-[60vw] h-[80vh] blur-[140px]"
-        style={{ background: 'radial-gradient(ellipse, #ff5722, transparent 70%)' }}
+      {/* Subtle grid + grain */}
+      <div className="absolute inset-0 grid-bg opacity-40" />
+      <div className="absolute inset-0 noise" />
+
+      {/* Dark vignette overlay — keeps WELCOME crisp at center */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, transparent 30%, rgba(5,5,9,0.75) 75%, #050509 100%)',
+        }}
       />
 
-      {/* Brand label top-left */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        className="absolute top-10 left-10 flex items-center gap-3"
-      >
-        <span className="font-mono text-[0.65rem] tracking-[0.4em] uppercase text-white/70">
-          Relativity OpenSource
-        </span>
-      </motion.div>
-
-      {/* Status indicator top-right */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-        className="absolute top-10 right-10 flex items-center gap-2"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-coral-500 animate-pulse" />
-        <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/50">
-          Online · 2026
-        </span>
-      </motion.div>
-
-      {/* Center stage */}
-      <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-10 w-full">
-
-          <div className="reveal-mask">
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-mono text-[0.7rem] tracking-[0.4em] uppercase text-white/40"
-            >
-              ← Pranav Murthy presents
-            </motion.div>
-          </div>
-
-          <div className="reveal-mask mt-6">
-            <motion.h1
-              initial={{ y: '110%' }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.9, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-[14vw] md:text-[10vw] leading-[0.85] tracking-tightest text-white"
-            >
-              ..
-            </motion.h1>
-          </div>
-
-          <div className="reveal-mask mt-2">
-            <motion.h1
-              initial={{ y: '110%' }}
-              animate={{ y: 0 }}
-              transition={{ delay: 1.15, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-[14vw] md:text-[10vw] leading-[0.85] tracking-tightest text-coral-500"
-            >
-              Welcome On Board
-            </motion.h1>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
-            className="mt-10 h-px w-32 bg-white/30 origin-left"
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 0.6 }}
-            className="mt-6 max-w-md font-sans text-sm text-white/50 leading-relaxed"
+      {/* Center — just WELCOME */}
+      <div className="relative z-10 text-center px-6">
+        <div className="reveal-mask">
+          <motion.h1
+            initial={{ y: '110%' }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-[20vw] md:text-[15vw] leading-none tracking-tightest"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 30%, #7c9cff 65%, #a78bfa 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+            }}
           >
-            The first-year build log of a curious mind — learning AI, defending systems, shipping code.
-          </motion.div>
+            WELCOME
+          </motion.h1>
         </div>
+
+        {/* Thin gradient underline */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 1.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-6 mx-auto h-px w-48 origin-center"
+          style={{ background: 'linear-gradient(90deg, transparent, #4f6fff, #8b5cf6, transparent)' }}
+        />
+
+        {/* Small caption */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 0.7 }}
+          className="mt-6 font-mono text-[0.65rem] md:text-[0.7rem] tracking-[0.45em] uppercase text-white/45"
+        >
+          Pranav Murthy · Relativity OpenSource
+        </motion.div>
       </div>
 
-      {/* Bottom-left footer mark */}
+      {/* Corner marks */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 0.6 }}
-        className="absolute bottom-10 left-10 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
+        transition={{ delay: 1.9, duration: 0.6 }}
+        className="absolute top-8 left-8 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
       >
-        Est. 2026 · India
+        Est. 2026
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 0.6 }}
-        className="absolute bottom-10 right-10 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
+        transition={{ delay: 1.9, duration: 0.6 }}
+        className="absolute bottom-8 right-8 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
       >
-        Entering site →
+        Entering →
       </motion.div>
     </motion.div>
   )

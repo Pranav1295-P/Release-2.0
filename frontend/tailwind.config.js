@@ -5,16 +5,23 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#000000',
-          900: '#070708',
-          800: '#0e0e10',
-          700: '#16161a',
+          950: '#050509',
+          900: '#0a0a14',
+          800: '#10101f',
+          700: '#17172b',
         },
+        // primary accent — electric blue
         coral: {
-          400: '#ff7a4d',
-          500: '#ff5722',
-          600: '#e64a1a',
-          700: '#c93f15',
+          400: '#7c9cff',
+          500: '#4f6fff',
+          600: '#3d56e0',
+          700: '#2f43b8',
+        },
+        // secondary accent — violet/purple
+        violet: {
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
         },
         mute: {
           100: '#fafafa',
@@ -30,22 +37,22 @@ export default {
           300: '#a3a3a3',
         },
         lime: {
-          400: '#ff5722',
-          500: '#ff5722',
-          600: '#e64a1a',
+          400: '#7c9cff',
+          500: '#4f6fff',
+          600: '#3d56e0',
         },
         gold: {
-          400: '#ff5722',
-          500: '#ff5722',
-          600: '#e64a1a',
+          400: '#7c9cff',
+          500: '#4f6fff',
+          600: '#3d56e0',
         },
         peach: {
-          400: '#ff7a4d',
-          500: '#ff5722',
+          400: '#a78bfa',
+          500: '#8b5cf6',
         },
         accent: {
-          cyan: '#ff7a4d',
-          violet: '#ff5722',
+          cyan: '#7c9cff',
+          violet: '#8b5cf6',
         },
       },
       fontFamily: {

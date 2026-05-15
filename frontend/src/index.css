@@ -4,9 +4,11 @@
 
 :root {
   color-scheme: dark;
-  --coral: #ff5722;
-  --coral-light: #ff7a4d;
-  --ink: #000000;
+  --blue: #4f6fff;
+  --blue-light: #7c9cff;
+  --violet: #8b5cf6;
+  --violet-light: #a78bfa;
+  --ink: #050509;
   --white: #ffffff;
   --mute: #a3a3a3;
 }
@@ -17,7 +19,7 @@ html, body, #root {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #000000;
+  background: #050509;
   color: #ffffff;
   overflow-x: hidden;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
@@ -25,18 +27,18 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #000000; }
+::-webkit-scrollbar-track { background: #050509; }
 ::-webkit-scrollbar-thumb {
-  background: #ff5722;
+  background: linear-gradient(180deg, #4f6fff, #8b5cf6);
   border-radius: 0;
 }
 
 ::selection {
-  background: #ff5722;
+  background: #4f6fff;
   color: #ffffff;
 }
 
-/* Display headings — Inter heavy, tight tracking */
+/* Display headings — Inter heavy, tight tracking (font unchanged) */
 h1, h2, h3, .font-display {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
@@ -44,14 +46,17 @@ h1, h2, h3, .font-display {
   line-height: 0.95;
 }
 
-/* Backward-compat — old class names now resolve to coral/white */
+/* Backward-compat — old class names now resolve to blue/violet */
 .text-gradient-gold,
 .text-gradient-lime {
-  color: #ff5722;
+  background: linear-gradient(90deg, #7c9cff, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .text-gradient-violet {
-  color: #ff7a4d;
+  color: #a78bfa;
 }
 
 .text-cream-warm {
@@ -68,11 +73,11 @@ h1, h2, h3, .font-display {
   transition: all 0.25s ease;
 }
 .glass-hover:hover {
-  border-color: #ff5722;
-  background: rgba(255, 87, 34, 0.04);
+  border-color: #4f6fff;
+  background: rgba(79, 111, 255, 0.05);
 }
 
-/* Buttons — primary coral, secondary outlined */
+/* Buttons — primary blue→violet gradient, secondary outlined */
 .btn-premium {
   position: relative;
   display: inline-flex;
@@ -85,14 +90,16 @@ h1, h2, h3, .font-display {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: #ff5722;
+  background: linear-gradient(135deg, #4f6fff, #8b5cf6);
+  background-size: 150% 150%;
+  background-position: 0% 0%;
   color: #ffffff;
-  border: 1px solid #ff5722;
-  transition: all 0.25s ease;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 .btn-premium:hover {
-  background: #e64a1a;
-  border-color: #e64a1a;
+  background-position: 100% 100%;
+  box-shadow: 0 0 24px -4px rgba(79, 111, 255, 0.5);
 }
 
 .btn-ghost {
@@ -112,8 +119,9 @@ h1, h2, h3, .font-display {
   background: transparent;
 }
 .btn-ghost:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
+  border-color: #7c9cff;
+  color: #7c9cff;
+  background: rgba(79, 111, 255, 0.06);
 }
 
 /* Eyebrow labels */
@@ -126,17 +134,17 @@ h1, h2, h3, .font-display {
   font-weight: 500;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #ff5722;
+  color: #7c9cff;
 }
 .section-eyebrow::before {
   content: '';
   display: inline-block;
   width: 24px;
   height: 1px;
-  background: #ff5722;
+  background: linear-gradient(90deg, #4f6fff, #8b5cf6);
 }
 
-/* Aurora — much more subtle */
+/* Aurora — blue + violet glows */
 .aurora {
   position: fixed;
   inset: 0;
@@ -153,10 +161,21 @@ h1, h2, h3, .font-display {
   height: 800px;
   border-radius: 50%;
   filter: blur(180px);
-  opacity: 0.12;
-  background: radial-gradient(circle, #ff5722, transparent 70%);
+  opacity: 0.14;
+  background: radial-gradient(circle, #4f6fff, transparent 70%);
 }
-.aurora::after { display: none; }
+.aurora::after {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -200px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  filter: blur(180px);
+  opacity: 0.12;
+  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+}
 
 /* Grid background — barely visible */
 .grid-bg {
@@ -168,7 +187,7 @@ h1, h2, h3, .font-display {
   -webkit-mask-image: linear-gradient(180deg, black 0%, transparent 70%);
 }
 
-/* Server-room style vertical light strips (Radiant-inspired) */
+/* Vertical light strips */
 .light-strips {
   position: absolute;
   inset: 0;
@@ -182,11 +201,14 @@ h1, h2, h3, .font-display {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, transparent 0%, #ff5722 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, #4f6fff 50%, transparent 100%);
   opacity: 0.4;
 }
 .light-strips::before { left: 25%; }
-.light-strips::after { right: 25%; }
+.light-strips::after {
+  right: 25%;
+  background: linear-gradient(180deg, transparent 0%, #8b5cf6 50%, transparent 100%);
+}
 
 /* Noise overlay */
 .noise {

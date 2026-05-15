@@ -148,7 +148,7 @@ export default function Auth() {
                   onClick={() => reset(m)}
                   className={`flex-1 py-2.5 text-xs uppercase tracking-[0.15em] font-medium transition-colors ${
                     mode === m
-                      ? 'bg-coral-500 text-black'
+                      ? 'bg-coral-500 text-white'
                       : 'text-white/55 hover:text-white'
                   }`}
                 >
