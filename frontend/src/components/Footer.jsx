@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Github, Mail, ArrowUpRight } from 'lucide-react'
+import RelativityLogo from './RelativityLogo.jsx'
 
 export default function Footer() {
   return (
@@ -19,8 +20,17 @@ export default function Footer() {
           className="grid md:grid-cols-2 gap-12 items-end"
         >
           <div>
-            <div className="font-display font-bold text-3xl text-white tracking-tighter leading-none">
-              PRANAV<span className="text-coral-500">.COM</span>
+            <div className="flex items-center gap-3">
+              <RelativityLogo size={48} />
+              <div
+                className="text-white font-medium text-2xl leading-none"
+                style={{
+                  fontFamily: '"DM Sans", "Google Sans", system-ui, sans-serif',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                Relativity
+              </div>
             </div>
             <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] uppercase text-coral-500/80">
               Relativity OpenSource
