@@ -1,10 +1,24 @@
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import RelativityLogo from './RelativityLogo.jsx'
 
+/**
+ * Welcome overlay — two beats:
+ *   Phase 0 (0.0 – 1.6 s) : logo alone, centered
+ *   Phase 1 (1.6 – 4.0 s) : logo slides to the left, the welcome text
+ *                            slides in to its right (Core Committee layout)
+ *   Phase 2 (4.0 s)       : fade out, hand off to the page
+ */
 export default function IntroOverlay({ onDone }) {
+  const [phase, setPhase] = useState(0)
+
   useEffect(() => {
-    const t = setTimeout(onDone, 3000)
-    return () => clearTimeout(t)
+    const t1 = setTimeout(() => setPhase(1), 1600)
+    const t2 = setTimeout(onDone, 4000)
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+    }
   }, [onDone])
 
   return (
@@ -14,92 +28,84 @@ export default function IntroOverlay({ onDone }) {
         opacity: 0,
         transition: { duration: 0.7, ease: [0.65, 0, 0.35, 1] },
       }}
-      className="fixed inset-0 z-[100] bg-ink-950 overflow-hidden flex items-center justify-center"
+      className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
     >
-      {/* Blue + violet aurora glows */}
+      {/* Subtle blue + violet glows */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.5, scale: 1 }}
-        transition={{ duration: 1.6, ease: 'easeOut' }}
-        className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] rounded-full blur-[150px]"
-        style={{ background: 'radial-gradient(circle, rgba(79,111,255,0.45), transparent 70%)' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.35 }}
+        transition={{ duration: 1.6 }}
+        className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] rounded-full blur-[140px]"
+        style={{ background: 'radial-gradient(circle, rgba(79,111,255,0.4), transparent 70%)' }}
       />
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.45, scale: 1 }}
-        transition={{ duration: 1.6, ease: 'easeOut', delay: 0.2 }}
-        className="absolute bottom-1/3 right-1/3 translate-x-1/2 translate-y-1/2 w-[45vw] h-[45vw] rounded-full blur-[150px]"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.4), transparent 70%)' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.6, delay: 0.2 }}
+        className="absolute bottom-1/3 right-1/3 translate-x-1/2 translate-y-1/2 w-[45vw] h-[45vw] rounded-full blur-[140px]"
+        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)' }}
       />
 
-      {/* Subtle grid + grain */}
-      <div className="absolute inset-0 grid-bg opacity-40" />
+      {/* Faint grid + grain */}
+      <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="absolute inset-0 noise" />
 
-      {/* Dark vignette overlay — keeps WELCOME crisp at center */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, transparent 30%, rgba(5,5,9,0.75) 75%, #050509 100%)',
-        }}
-      />
+      {/* Center stage — logo + (later) text */}
+      <div className="relative z-10 flex items-center justify-center">
+        {/* Logo — entrance, then slides to the left in phase 1 */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6, rotate: -20 }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            x: phase === 0 ? 0 : -16,
+          }}
+          transition={{
+            opacity: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+            scale: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+            rotate: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+            x: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+          }}
+          className="flex-shrink-0"
+        >
+          <RelativityLogo size={120} />
+        </motion.div>
 
-      {/* Center — just WELCOME */}
-      <div className="relative z-10 text-center px-6">
-        <div className="reveal-mask">
-          <motion.h1
-            initial={{ y: '110%' }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-[20vw] md:text-[15vw] leading-none tracking-tightest"
+        {/* Welcome text — slides in from the right in phase 1 */}
+        <motion.div
+          initial={{ opacity: 0, x: -20, width: 0 }}
+          animate={{
+            opacity: phase >= 1 ? 1 : 0,
+            x: phase >= 1 ? 0 : -20,
+            width: phase >= 1 ? 'auto' : 0,
+          }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="overflow-hidden ml-6"
+        >
+          <div
+            className="text-white whitespace-nowrap"
             style={{
-              background: 'linear-gradient(135deg, #ffffff 30%, #7c9cff 65%, #a78bfa 100%)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              color: 'transparent',
+              fontFamily: '"DM Sans", "Google Sans", system-ui, sans-serif',
+              fontWeight: 500,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.05,
             }}
           >
-            WELCOME
-          </motion.h1>
-        </div>
-
-        {/* Thin gradient underline */}
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 mx-auto h-px w-48 origin-center"
-          style={{ background: 'linear-gradient(90deg, transparent, #4f6fff, #8b5cf6, transparent)' }}
-        />
-
-        {/* Small caption */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.7 }}
-          className="mt-6 font-mono text-[0.65rem] md:text-[0.7rem] tracking-[0.45em] uppercase text-white/45"
-        >
-          Pranav Murthy · Relativity OpenSource
+            <div className="text-2xl md:text-4xl">Welcome To</div>
+            <div className="text-2xl md:text-4xl">Pranav's Official Webpage</div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Corner marks */}
+      {/* Bottom-right tag */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.9, duration: 0.6 }}
-        className="absolute top-8 left-8 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
-      >
-        Est. 2026
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.9, duration: 0.6 }}
+        transition={{ delay: 2.6, duration: 0.6 }}
         className="absolute bottom-8 right-8 font-mono text-[0.6rem] tracking-[0.3em] uppercase text-white/30"
       >
-        Entering →
+        Relativity OpenSource · 2026
       </motion.div>
     </motion.div>
   )

@@ -28,7 +28,7 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 3.0, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: 4.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
           ? 'backdrop-blur-xl bg-black/80 border-b border-white/10'
