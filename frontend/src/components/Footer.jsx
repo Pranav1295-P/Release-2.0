@@ -29,14 +29,14 @@ export default function Footer() {
                   letterSpacing: '-0.01em',
                 }}
               >
-                Relativity
+                relativity
               </div>
             </div>
             <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] uppercase text-coral-500/80">
-              Relativity OpenSource
+              Open-Source Community, Based In Bengaluru India
             </div>
             <p className="mt-6 font-body text-sm text-white/45 max-w-sm leading-relaxed">
-              A first-year B.Tech CSE student — learning AI and Cyber Security in the open.
+              All Ideation, Issues, Changes Are Subjected To Only Bengaluru Office
             </p>
           </div>
 
