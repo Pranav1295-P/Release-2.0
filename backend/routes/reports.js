@@ -1,31 +1,26 @@
 import express from 'express'
 import multer from 'multer'
-import path from 'path'
-import fs from 'fs'
 import crypto from 'crypto'
-import { fileURLToPath } from 'url'
 import Report from '../models/Report.js'
 import { requireAuth } from '../middleware/auth.js'
+import {
+  uploadToCloudinary,
+  deleteFromCloudinary,
+  cloudinaryConfigured,
+} from '../utils/cloudinary.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const UPLOAD_DIR = path.join(__dirname, '..', 'uploads')
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true })
+const router = express.Router()
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-  filename: (req, file, cb) => {
-    const ext = '.pdf'
-    const name = crypto.randomBytes(16).toString('hex') + ext
-    cb(null, name)
-  },
-})
-
+// In-memory multer — the PDF goes straight to Cloudinary, never touches
+// Render's ephemeral disk (which wipes on every redeploy).
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 25 * 1024 * 1024 }, // 25 MB
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'application/pdf' && file.originalname.toLowerCase().endsWith('.pdf')) {
+    if (
+      file.mimetype === 'application/pdf' &&
+      file.originalname.toLowerCase().endsWith('.pdf')
+    ) {
       cb(null, true)
     } else {
       cb(new Error('Only PDF files are accepted'))
@@ -33,19 +28,20 @@ const upload = multer({
   },
 })
 
-const router = express.Router()
-
 // GET /api/reports — public list
 router.get('/', async (req, res, next) => {
   try {
-    const list = await Report.find().sort({ createdAt: -1 }).populate('author', 'username').lean()
+    const list = await Report.find()
+      .sort({ createdAt: -1 })
+      .populate('author', 'username')
+      .lean()
     res.json(list)
   } catch (err) {
     next(err)
   }
 })
 
-// POST /api/reports — auth + PDF upload
+// POST /api/reports — auth + PDF upload to Cloudinary
 router.post('/', requireAuth, (req, res, next) => {
   upload.single('file')(req, res, (err) => {
     if (err) return res.status(400).json({ message: err.message })
@@ -53,46 +49,64 @@ router.post('/', requireAuth, (req, res, next) => {
       try {
         const { title } = req.body
         if (!title?.trim()) {
-          if (req.file) fs.unlink(req.file.path, () => {})
           return res.status(400).json({ message: 'Title required' })
         }
-        if (!req.file) return res.status(400).json({ message: 'PDF file required' })
+        if (!req.file) {
+          return res.status(400).json({ message: 'PDF file required' })
+        }
+        if (!cloudinaryConfigured) {
+          return res.status(503).json({
+            message: 'File uploads are not configured on the server yet.',
+          })
+        }
 
-        const publicBase = (process.env.PUBLIC_URL || `http://localhost:${process.env.PORT || 5000}`).replace(/\/$/, '')
-        const fileUrl = `${publicBase}/uploads/${req.file.filename}`
+        // Upload the PDF as a "raw" Cloudinary asset. The publicId ends in
+        // .pdf so the delivered URL does too — browsers then render it inline
+        // instead of downloading an unknown blob.
+        const pdfId = `${crypto.randomBytes(12).toString('hex')}.pdf`
+        const uploaded = await uploadToCloudinary(req.file.buffer, 'raw', {
+          folder: 'reports',
+          publicId: pdfId,
+        })
 
         const report = await Report.create({
           title: String(title).trim(),
           fileName: req.file.originalname,
-          storedName: req.file.filename,
-          fileSize: req.file.size,
-          fileUrl,
+          publicId: uploaded.publicId,
+          fileSize: uploaded.bytes || req.file.size,
+          fileUrl: uploaded.url,
           author: req.user._id,
         })
 
         await report.populate('author', 'username')
         res.status(201).json(report)
       } catch (e) {
-        if (req.file) fs.unlink(req.file.path, () => {})
         next(e)
       }
     })()
   })
 })
 
-// DELETE /api/reports/:id — owner only
+// DELETE /api/reports/:id — owner or admin
 router.delete('/:id', requireAuth, async (req, res, next) => {
   try {
     const report = await Report.findById(req.params.id)
     if (!report) return res.status(404).json({ message: 'Not found' })
-    if (String(report.author) !== String(req.user._id) && !req.user.isAdmin) {
+    if (
+      String(report.author) !== String(req.user._id) &&
+      !req.user.isAdmin
+    ) {
       return res.status(403).json({ message: 'Forbidden' })
     }
-    const filePath = path.join(UPLOAD_DIR, report.storedName)
-    fs.unlink(filePath, () => {})
+    // Remove the file from Cloudinary if we have its id.
+    if (report.publicId) {
+      await deleteFromCloudinary(report.publicId, 'raw')
+    }
     await report.deleteOne()
     res.json({ ok: true })
   } catch (err) {
+    if (err?.name === 'CastError')
+      return res.status(404).json({ message: 'Not found' })
     next(err)
   }
 })
