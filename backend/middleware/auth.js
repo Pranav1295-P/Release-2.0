@@ -23,3 +23,30 @@ export function requireAdmin(req, res, next) {
   }
   next()
 }
+
+// Sets req.user if a valid token is present, but never rejects the request.
+// Used for endpoints that are public but behave differently when signed in
+// (e.g. showing locked vs. unlocked course content).
+export async function optionalAuth(req, res, next) {
+  try {
+    const header = req.headers.authorization || ''
+    const token = header.startsWith('Bearer ') ? header.slice(7) : null
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      const user = await User.findById(decoded.id)
+      if (user) req.user = user
+    }
+  } catch {
+    // ignore — just proceed unauthenticated
+  }
+  next()
+}
+
+// Gold = official accounts (admin or verifiedType 'gold'). Only they manage courses.
+export function requireGold(req, res, next) {
+  const u = req.user
+  if (!u || !(u.isAdmin || u.verifiedType === 'gold')) {
+    return res.status(403).json({ message: 'Only verified official accounts can do this.' })
+  }
+  next()
+}

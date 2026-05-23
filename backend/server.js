@@ -13,6 +13,7 @@ import blogRoutes from './routes/blogs.js'
 import commentRoutes from './routes/comments.js'
 import reportRoutes from './routes/reports.js'
 import paymentRoutes from './routes/payments.js'
+import courseRoutes from './routes/courses.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -54,7 +55,7 @@ const writeLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 })
-app.use(['/api/auth', '/api/blogs', '/api/reports', '/api/payments'], (req, res, next) => {
+app.use(['/api/auth', '/api/blogs', '/api/reports', '/api/payments', '/api/courses'], (req, res, next) => {
   if (req.method === 'GET') return next()
   // The webhook is Razorpay calling us — don't rate-limit it.
   if (req.path === '/webhook') return next()
@@ -70,6 +71,7 @@ app.use('/api/blogs', blogRoutes)
 app.use('/api/blogs', commentRoutes) // nested under /api/blogs/:id/comments
 app.use('/api/reports', reportRoutes)
 app.use('/api/payments', paymentRoutes)
+app.use('/api/courses', courseRoutes)
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }))
 

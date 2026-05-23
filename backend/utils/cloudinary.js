@@ -66,6 +66,30 @@ export function uploadToCloudinary(buffer, kind, opts = {}) {
   })
 }
 
+/**
+ * Generate a signature so the BROWSER can upload a file directly to
+ * Cloudinary (bypassing our server — important for large videos that would
+ * otherwise time out / exhaust memory on Render's free tier).
+ *
+ * The client posts to https://api.cloudinary.com/v1_1/<cloud>/<type>/upload
+ * with: file, api_key, timestamp, folder, signature.
+ */
+export function getUploadSignature({ folder = 'courses' } = {}) {
+  const timestamp = Math.round(Date.now() / 1000)
+  // Only the params we sign must be sent by the client (besides file + api_key).
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder },
+    process.env.CLOUDINARY_API_SECRET
+  )
+  return {
+    signature,
+    timestamp,
+    folder,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+  }
+}
+
 /** Delete an asset from Cloudinary by its public id. */
 export async function deleteFromCloudinary(publicId, kind) {
   if (!publicId) return
