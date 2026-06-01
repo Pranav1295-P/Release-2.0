@@ -11,10 +11,9 @@ import BlogDetail from './pages/BlogDetail.jsx'
 import Reports from './pages/Reports.jsx'
 import Auth from './pages/Auth.jsx'
 import AdminBlog from './pages/AdminBlog.jsx'
-import Verify from './pages/Verify.jsx'
-import Courses from './pages/Courses.jsx'
-import CourseDetail from './pages/CourseDetail.jsx'
-import CourseManage from './pages/CourseManage.jsx'
+<Route path="/courses" element={<Courses />} />
+<Route path="/courses/manage/:id" element={<CourseManage />} />
+<Route path="/courses/:id" element={<CourseDetail />} />
 
 export default function App() {
   const location = useLocation()
