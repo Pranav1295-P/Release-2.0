@@ -8,7 +8,6 @@ import VerifiedBadge from './VerifiedBadge.jsx'
 const links = [
   { to: '/', label: 'Home' },
   { to: '/projects', label: 'Projects' },
-  
   { to: '/blogs', label: 'Free-Conversations' },
   { to: '/reports', label: 'Reports' },
 ]

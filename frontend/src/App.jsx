@@ -11,9 +11,7 @@ import BlogDetail from './pages/BlogDetail.jsx'
 import Reports from './pages/Reports.jsx'
 import Auth from './pages/Auth.jsx'
 import AdminBlog from './pages/AdminBlog.jsx'
-<Route path="/courses" element={<Courses />} />
-<Route path="/courses/manage/:id" element={<CourseManage />} />
-<Route path="/courses/:id" element={<CourseDetail />} />
+import Verify from './pages/Verify.jsx'
 
 export default function App() {
   const location = useLocation()
@@ -48,9 +46,6 @@ export default function App() {
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/:id" element={<BlogDetail />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/manage/:id" element={<CourseManage />} />
-            <Route path="/courses/:id" element={<CourseDetail />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/verify" element={<Verify />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
