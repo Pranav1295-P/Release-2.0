@@ -4,13 +4,13 @@
 
 :root {
   color-scheme: dark;
-  --blue: #4f6fff;
-  --blue-light: #7c9cff;
-  --violet: #8b5cf6;
-  --violet-light: #a78bfa;
-  --ink: #050509;
-  --white: #ffffff;
-  --mute: #a3a3a3;
+  --red:        #e30613;
+  --red-bright: #ff1f3f;
+  --gold:       #d4a24c;
+  --gold-bright:#f4c842;
+  --ink:        #070707;
+  --white:      #ffffff;
+  --mute:       #a3a3a3;
 }
 
 html, body, #root {
@@ -19,65 +19,63 @@ html, body, #root {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #050509;
+  background: #070707;
   color: #ffffff;
   overflow-x: hidden;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
 }
 
-/* Scrollbar */
+/* Scrollbar — red→gold gradient */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #050509; }
+::-webkit-scrollbar-track { background: #070707; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4f6fff, #8b5cf6);
+  background: linear-gradient(180deg, #e30613, #d4a24c);
   border-radius: 0;
 }
 
 ::selection {
-  background: #4f6fff;
+  background: #e30613;
   color: #ffffff;
 }
 
-/* Display headings — Inter heavy, tight tracking (font unchanged) */
+/* Display headings */
 h1, h2, h3, .font-display {
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 0.95;
 }
 
-/* Backward-compat — old class names now resolve to blue/violet */
+/* Gold text helpers (backward-compat names still work) */
 .text-gradient-gold,
 .text-gradient-lime {
-  background: linear-gradient(90deg, #7c9cff, #a78bfa);
+  background: linear-gradient(90deg, #f4c842, #d4a24c, #f4c842);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+.text-gradient-violet { color: #d4a24c; }
+.text-cream-warm { color: #ffffff; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-.text-gradient-violet {
-  color: #a78bfa;
-}
-
-.text-cream-warm {
-  color: #ffffff;
-}
-
-/* Cards — minimal borders, no glass, no blur */
+/* Cards */
 .glass {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-.glass-hover {
-  transition: all 0.25s ease;
-}
+.glass-hover { transition: all 0.25s ease; }
 .glass-hover:hover {
-  border-color: #4f6fff;
-  background: rgba(79, 111, 255, 0.05);
+  border-color: #e30613;
+  background: rgba(227, 6, 19, 0.05);
 }
 
-/* Buttons — primary blue→violet gradient, secondary outlined */
+/* Primary button — red with gold-glow on hover */
 .btn-premium {
   position: relative;
   display: inline-flex;
@@ -86,22 +84,22 @@ h1, h2, h3, .font-display {
   padding: 0.875rem 1.75rem;
   border-radius: 2px;
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #4f6fff, #8b5cf6);
-  background-size: 150% 150%;
-  background-position: 0% 0%;
+  background: #e30613;
   color: #ffffff;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid #e30613;
+  transition: all 0.25s ease;
 }
 .btn-premium:hover {
-  background-position: 100% 100%;
-  box-shadow: 0 0 24px -4px rgba(79, 111, 255, 0.5);
+  background: #ff1f3f;
+  border-color: #d4a24c;
+  box-shadow: 0 0 22px -4px rgba(212, 162, 76, 0.6);
 }
 
+/* Ghost button — gold outline */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
@@ -109,42 +107,42 @@ h1, h2, h3, .font-display {
   padding: 0.875rem 1.75rem;
   border-radius: 2px;
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: all 0.25s ease;
+  color: #d4a24c;
+  border: 1px solid rgba(212, 162, 76, 0.55);
   background: transparent;
+  transition: all 0.25s ease;
 }
 .btn-ghost:hover {
-  border-color: #7c9cff;
-  color: #7c9cff;
-  background: rgba(79, 111, 255, 0.06);
+  border-color: #f4c842;
+  color: #f4c842;
+  background: rgba(212, 162, 76, 0.06);
 }
 
-/* Eyebrow labels */
+/* Eyebrow labels — gold with gold line */
 .section-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
+  font-weight: 600;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #7c9cff;
+  color: #d4a24c;
 }
 .section-eyebrow::before {
   content: '';
   display: inline-block;
   width: 24px;
   height: 1px;
-  background: linear-gradient(90deg, #4f6fff, #8b5cf6);
+  background: linear-gradient(90deg, #e30613, #d4a24c);
 }
 
-/* Aurora — blue + violet glows */
+/* Aurora — red dominant, gold accent */
 .aurora {
   position: fixed;
   inset: 0;
@@ -155,33 +153,33 @@ h1, h2, h3, .font-display {
 .aurora::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -10%;
   right: -200px;
   width: 800px;
   height: 800px;
   border-radius: 50%;
   filter: blur(180px);
-  opacity: 0.14;
-  background: radial-gradient(circle, #4f6fff, transparent 70%);
+  opacity: 0.22;
+  background: radial-gradient(circle, #e30613, transparent 70%);
 }
 .aurora::after {
   content: '';
   position: absolute;
-  bottom: -200px;
-  left: -200px;
+  bottom: -220px;
+  left: -150px;
   width: 700px;
   height: 700px;
   border-radius: 50%;
   filter: blur(180px);
-  opacity: 0.12;
-  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+  opacity: 0.16;
+  background: radial-gradient(circle, #d4a24c, transparent 70%);
 }
 
-/* Grid background — barely visible */
+/* Grid */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: linear-gradient(180deg, black 0%, transparent 70%);
   -webkit-mask-image: linear-gradient(180deg, black 0%, transparent 70%);
@@ -201,22 +199,24 @@ h1, h2, h3, .font-display {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, transparent 0%, #4f6fff 50%, transparent 100%);
-  opacity: 0.4;
+  opacity: 0.45;
 }
-.light-strips::before { left: 25%; }
+.light-strips::before {
+  left: 25%;
+  background: linear-gradient(180deg, transparent 0%, #e30613 50%, transparent 100%);
+}
 .light-strips::after {
   right: 25%;
-  background: linear-gradient(180deg, transparent 0%, #8b5cf6 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, #d4a24c 50%, transparent 100%);
 }
 
-/* Noise overlay */
+/* Filmic noise */
 .noise {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.03;
+  opacity: 0.04;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -228,7 +228,7 @@ h1, h2, h3, .font-display {
   animation: marquee 40s linear infinite;
 }
 @keyframes marquee {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
@@ -237,7 +237,25 @@ h1, h2, h3, .font-display {
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
-/* Text reveal animation utility */
-.reveal-mask {
-  overflow: hidden;
+/* Reveal-mask helper for text slides */
+.reveal-mask { overflow: hidden; }
+
+/* RCB-style diagonal accent */
+.slash-red {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
+.slash-red::before,
+.slash-red::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 60px;
+  left: -50%;
+  background: linear-gradient(90deg, transparent, #e30613 30%, #ff1f3f 50%, #e30613 70%, transparent);
+  opacity: 0.18;
+  transform: rotate(-12deg);
+}
+.slash-red::before { top: 22%; }
+.slash-red::after  { bottom: 22%; background: linear-gradient(90deg, transparent, #d4a24c 30%, #f4c842 50%, #d4a24c 70%, transparent); opacity: 0.12; transform: rotate(12deg); }

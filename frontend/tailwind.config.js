@@ -5,55 +5,37 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#050509',
-          900: '#0a0a14',
-          800: '#10101f',
-          700: '#17172b',
+          950: '#070707',
+          900: '#0d0d0d',
+          800: '#141414',
+          700: '#1c1c1c',
         },
-        // primary accent — electric blue
+        // Primary brand red — vibrant, sporty
         coral: {
-          400: '#7c9cff',
-          500: '#4f6fff',
-          600: '#3d56e0',
-          700: '#2f43b8',
+          400: '#ff3848',
+          500: '#e30613',
+          600: '#b80510',
+          700: '#8a040c',
         },
-        // secondary accent — violet/purple
-        violet: {
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
+        red: {
+          400: '#ff3848',
+          500: '#e30613',
+          600: '#b80510',
         },
-        mute: {
-          100: '#fafafa',
-          300: '#a3a3a3',
-          500: '#737373',
-          700: '#404040',
-        },
-        // backward-compat (older files still use these tokens)
-        cream: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#a3a3a3',
-        },
-        lime: {
-          400: '#7c9cff',
-          500: '#4f6fff',
-          600: '#3d56e0',
-        },
+        // Gold accent — premium muted (jersey-trim style)
         gold: {
-          400: '#7c9cff',
-          500: '#4f6fff',
-          600: '#3d56e0',
+          400: '#f4c842',
+          500: '#d4a24c',
+          600: '#a87a30',
+          700: '#7a5520',
         },
-        peach: {
-          400: '#a78bfa',
-          500: '#8b5cf6',
-        },
-        accent: {
-          cyan: '#7c9cff',
-          violet: '#8b5cf6',
-        },
+        // Backward-compat aliases so any old usages auto-flip
+        lime:   { 400: '#ff3848', 500: '#e30613', 600: '#b80510' },
+        peach:  { 400: '#ff6d54', 500: '#ff3848' },
+        violet: { 400: '#f4c842', 500: '#d4a24c', 600: '#a87a30' },
+        cream:  { 50: '#fafafa', 100: '#f5f5f5', 200: '#e5e5e5', 300: '#a3a3a3' },
+        mute:   { 100: '#fafafa', 300: '#a3a3a3', 500: '#737373', 700: '#404040' },
+        accent: { cyan: '#f4c842', violet: '#e30613' },
       },
       fontFamily: {
         display: ['Inter', 'system-ui', 'sans-serif'],

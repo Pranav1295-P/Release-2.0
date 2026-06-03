@@ -21,7 +21,8 @@ export default function VerifiedBadge({ user, size = 14, className = '' }) {
   if (!type) return null
 
   const isGold = type === 'gold'
-  const color = isGold ? '#f5c542' : '#4f6fff'
+  // Gold = official (vibrant gold). Subscriber = silver/white (neutral, fits RCB theme).
+  const color = isGold ? '#f4c842' : '#c8c8d0'
   const label = isGold ? 'Verified — official account' : 'Verified — subscriber'
 
   return (
@@ -34,7 +35,7 @@ export default function VerifiedBadge({ user, size = 14, className = '' }) {
         size={size}
         strokeWidth={2.5}
         style={{ color }}
-        fill={isGold ? 'rgba(245,197,66,0.15)' : 'rgba(79,111,255,0.15)'}
+        fill={isGold ? 'rgba(244,200,66,0.18)' : 'rgba(200,200,208,0.15)'}
       />
     </span>
   )

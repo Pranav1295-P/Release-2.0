@@ -11,13 +11,13 @@ export default function Home() {
         {/* Background — coral glow on the right behind the photo */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[55%] h-full opacity-30"
-            style={{ background: 'radial-gradient(ellipse at right center, rgba(255,87,34,0.35), transparent 70%)' }}
+            style={{ background: 'radial-gradient(ellipse at right center, rgba(227,6,19,0.4), transparent 70%)' }}
           />
           {/* Vertical coral light bars echoing Radiant */}
           <div className="absolute top-0 bottom-0 right-[30%] w-px opacity-30"
-            style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }} />
+            style={{ background: 'linear-gradient(180deg, transparent, #e30613, transparent)' }} />
           <div className="absolute top-0 bottom-0 right-[10%] w-px opacity-20"
-            style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }} />
+            style={{ background: 'linear-gradient(180deg, transparent, #e30613, transparent)' }} />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full relative grid lg:grid-cols-12 gap-12 items-center pt-24 pb-20">
@@ -105,7 +105,7 @@ export default function Home() {
 
                 {/* Coral vertical bar through photo */}
                 <div className="absolute top-0 bottom-0 right-8 w-px opacity-60"
-                  style={{ background: 'linear-gradient(180deg, transparent, #ff5722, transparent)' }} />
+                  style={{ background: 'linear-gradient(180deg, transparent, #e30613, transparent)' }} />
 
                 {/* Filmic gradient overlay at bottom */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
@@ -216,7 +216,7 @@ export default function Home() {
       {/* COMPANY ——————————————————————————————————— */}
       <section className="relative py-32 border-t border-white/5 overflow-hidden">
         <div className="absolute inset-0 opacity-20"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(255,87,34,0.4), transparent 60%)' }} />
+          style={{ background: 'radial-gradient(ellipse at center, rgba(227,6,19,0.45), transparent 60%)' }} />
 
         <div className="max-w-5xl mx-auto px-6 lg:px-10 relative">
           <motion.div

@@ -55,7 +55,7 @@ export default function Verify() {
         description: 'Blue Tick — verified for 30 days',
         order_id: order.orderId,
         prefill: { email: user.email, name: user.username },
-        theme: { color: '#4f6fff' },
+        theme: { color: '#e30613' },
         handler: async (response) => {
           // 3. Verify the payment on our backend
           try {
@@ -108,7 +108,7 @@ export default function Verify() {
               <BadgeCheck
                 size={40}
                 className="mx-auto mb-4"
-                style={{ color: user.verifiedType === 'gold' ? '#f5c542' : '#4f6fff' }}
+                style={{ color: user.verifiedType === 'gold' ? '#f4c842' : '#c8c8d0' }}
               />
               <h2 className="font-display text-2xl font-bold text-white mb-2">
                 You're verified.
@@ -156,7 +156,7 @@ export default function Verify() {
               {/* Price header */}
               <div
                 className="p-8 text-center relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, rgba(79,111,255,0.12), rgba(139,92,246,0.12))' }}
+                style={{ background: 'linear-gradient(135deg, rgba(227,6,19,0.14), rgba(212,162,76,0.12))' }}
               >
                 <Sparkles size={20} className="mx-auto text-coral-400 mb-3" />
                 <div className="flex items-baseline justify-center gap-1">

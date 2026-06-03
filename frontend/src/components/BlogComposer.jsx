@@ -102,7 +102,7 @@ export default function BlogComposer({ onPosted }) {
       {/* New Feature badge */}
       <div
         className="absolute -top-3 left-6 px-2.5 py-1 font-mono text-[0.55rem] tracking-[0.25em] uppercase text-white font-semibold"
-        style={{ background: 'linear-gradient(135deg, #4f6fff, #8b5cf6)' }}
+        style={{ background: 'linear-gradient(135deg, #e30613, #d4a24c)' }}
       >
         ✦ New Feature
       </div>
@@ -110,7 +110,7 @@ export default function BlogComposer({ onPosted }) {
       <div className="flex items-center gap-2 mb-4 mt-1">
         <div
           className="w-8 h-8 text-white flex items-center justify-center font-display font-bold text-sm"
-          style={{ background: 'linear-gradient(135deg, #4f6fff, #8b5cf6)' }}
+          style={{ background: 'linear-gradient(135deg, #e30613, #d4a24c)' }}
         >
           {user.username?.[0]?.toUpperCase() || '?'}
         </div>
